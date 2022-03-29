@@ -2,7 +2,7 @@ const express = require('express');
 
 const router = express.Router();
 
-const Post = require('../models/Posts')
+const Posts = require('../models/Posts')
 
 router.get('/', (req, res) => {
     res.send('Posts');
@@ -10,6 +10,12 @@ router.get('/', (req, res) => {
 
 router.post("/", (req, res) => {
     console.log(req.body);
+    const post = new Posts({
+        title: req.body.title,
+        description: req.body.description
+    });
+
+    post.save();
 });
 
 module.exports = router;
