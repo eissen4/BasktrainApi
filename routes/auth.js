@@ -14,7 +14,7 @@ router.post('/register', async (req, res) => {
     const usernameExist = await User.findOne({username: req.body.username});
     if (usernameExist) return res.status(400).send('El usuario ya existe');
 
-    //Hash la contraseña
+    //Hashear la contraseña
     const salt = await bcrypt.genSalt(10);
     const hashedPassword = await bcrypt.hash(req.body.password, salt)
 
@@ -37,10 +37,12 @@ router.post('/register', async (req, res) => {
 
 //LOGIN
 router.post('/login', async (req,res) => {
+
     //Valida que los datos sean correctos
     const {error} = loginValidation(req.body);
     if (error) return res.status(400).send(error.details[0].message);
 
+    
     //Usuario no existe
     const username = await User.findOne({username: req.body.username});
     if (!username) return res.status(400).send('El usuario o la contraseña no son correctas.');
@@ -53,7 +55,7 @@ router.post('/login', async (req,res) => {
     const token = jwt.sign({_id: username._id}, process.env.SECRET_TOKEN);
     res.header("auth-token", token).send(token);
 
-    res.send('Logged in')
+    //res.send('Logged in')
 });
 
 module.exports = router;

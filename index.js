@@ -5,10 +5,12 @@ require('dotenv/config');
 
 const authRoute = require('./routes/auth')
 const usersRoute = require('./routes/users')
+const matchRoute = require('./routes/match')
 
 app.use(express.json());
 app.use('/', authRoute)
 app.use('/users', usersRoute)
+app.use('/match', matchRoute)
 
 //Connect to DB
 mongoose.connect(process.env.DB_CONNECTION, () => {
