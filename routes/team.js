@@ -5,6 +5,15 @@ const Team = require('../models/Team')
 const jwt = require('jsonwebtoken');
 const Player = require('../models/Player')
 
+
+router.get('/', async (req, res) => {
+    try {
+        res.json("hola");
+    }catch (err) {
+        res.json({message:err});
+    }
+});
+
 router.get('/getTeamPerToken/', async (req, res) => {
     const decoded = jwt.decode(req.header('auth-token'), process.env.SECRET_TOKEN);
     try {
@@ -16,7 +25,7 @@ router.get('/getTeamPerToken/', async (req, res) => {
     }
 });
 
-router.get('/getTeamPerId/:teamId', verify, async (req, res) => {
+router.get('/getTeamPerId/:teamId', async (req, res) => {
     try {
         const team = await Team.findOne({_id: req.params.teamId});
         console.log(team);
