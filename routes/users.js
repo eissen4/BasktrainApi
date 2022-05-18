@@ -13,7 +13,7 @@ router.get('/', verify, async (req, res) => {
     }
 })
 
-router.get('/token', verify, async (req, res) => {
+router.get('/', verify, async (req, res) => {
     const decoded = jwt.decode(req.header('auth-token'), process.env.SECRET_TOKEN);
     console.log(decoded)
     try {
@@ -23,25 +23,6 @@ router.get('/token', verify, async (req, res) => {
         res.json({message:err});
     }
 })
-
-router.post("/", async (req, res) => {
-    console.log(req.body);
-    const post = new Users({
-            username: req.body.name,
-            password: req.body.password,
-            data: {
-                name: req.body.data.name,
-                email: req.body.data.email
-            }
-    });
-    try {
-        const savedPost = await post.save();
-        res.json(savedPost);
-    } catch(err) {
-        res.json({message: err});
-    };
-    
-});
 
 router.get('/:userId', verify, async (req, res) => {
     try {
@@ -64,16 +45,13 @@ router.delete('/:userId', async (req, res) => {
 });
 
 router.patch('/:userId', async (req, res) => {
-    console.log("entra")
     try {
         const updatedUser = await Users.updateOne(
             {_id: req.params.userId},
             {$set: { username: req.body.username} }
         );
-        console.log(updatedUser)
         res.json(updatedUser);
     }catch (err){
-        console.log("entra3")
         res.json({message: err});
     }
     
