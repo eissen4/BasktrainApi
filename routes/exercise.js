@@ -70,8 +70,9 @@ router.delete('/:exerciseId', verify, async (req, res) => {
     try {
         const removeExercise = await Exercise.deleteOne({ _id: req.params.exerciseId });
         const removeValue = await Value.deleteMany({ exercise: req.params.exerciseId });
-        const removeComment = await Comment.deleteMany({exercise: req.params.exerciseId})
-        res.json("ok");
+        const removeComment = await Comment.deleteMany({exercise: req.params.exerciseId});
+        response = {removeExercise, removeValue, removeComment};
+        res.json(response);
     } catch (err) {
         res.json({ message: err })
     }

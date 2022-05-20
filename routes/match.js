@@ -68,7 +68,8 @@ router.delete("/:matchId", verify, async (req, res) =>{
     try {
         const removeMatch = await Match.deleteOne({_id: req.params.matchId});
         const removeStats = await StatPlayerMatch.deleteMany({match: req.params.matchId});
-        res.json("ok");
+        response = {removeMatch, removeStats}
+        res.json(response);
     } catch (err) {
         res.json({message: err})
     }

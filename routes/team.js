@@ -63,7 +63,8 @@ router.delete("/:teamId", verify, async (req, res) =>{
     try {
         const removeTeam = await Team.deleteOne({_id: req.params.teamId});
         const removePlayer = await Player.deleteMany({team: req.params.teamId});
-        res.json("ok");
+        response = {removeTeam, removePlayer}
+        res.json(response);
     } catch (err) {
         res.json({message: err})
     }
