@@ -16,7 +16,7 @@ router.get('/', async (req, res) => {
 });
 
 router.get('/getAllMatchesFromUser', verify, async (req, res) => {
-    const decoded = jwt.decode(req.header('auth-token'), process.env.SECRET_TOKEN);
+    const decoded = jwt.decode(req.header('Authorization'), process.env.SECRET_TOKEN);
     try {
         const match = await Match.find({user: decoded._id})
         console.log(match);
@@ -51,8 +51,8 @@ router.post("/", async (req, res) => {
     console.log(req.body);
     const post = new Match({
         user: decoded._id,
-        teamOne: req.body.teamOne,
-        teamTwo: req.body.teamTwo,
+        team: req.body.team,
+        opponent: req.body.opponent,
         scoreOne: req.body.scoreOne,
         scoreTwo: req.body.scoreTwo
     });
