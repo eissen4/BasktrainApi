@@ -18,8 +18,10 @@ router.get('/', async (req, res) => {
 router.get('/getAllMatchesFromUser', verify, async (req, res) => {
     const decoded = jwt.decode(req.header('Authorization'), process.env.SECRET_TOKEN);
     try {
-        const match = await Match.find({user: decoded._id})
-        console.log(match);
+        const match = await  Match.find({user: decoded._id})
+        //match2 = match.map( x =>_id = x._id.toString())
+        // console.log({...match,
+        //     _id: x._id.toString()});
         res.json(match)
     }catch (err) {
         res.json({message:err});
@@ -47,7 +49,7 @@ router.get('/getAllStatsFromMatch/:matchId', verify, async (req, res) => {
 });
 
 router.post("/", async (req, res) => {
-    const decoded = jwt.decode(req.header('auth-token'), process.env.SECRET_TOKEN);
+    const decoded = jwt.decode(req.header('Authorization'), process.env.SECRET_TOKEN);
     console.log(req.body);
     const post = new Match({
         user: decoded._id,
@@ -68,7 +70,8 @@ router.delete("/:matchId", verify, async (req, res) =>{
     try {
         const removeMatch = await Match.deleteOne({_id: req.params.matchId});
         const removeStats = await StatPlayerMatch.deleteMany({match: req.params.matchId});
-        res.json("ok");
+        response = {removeMatch, removeStats}
+        res.json(response);
     } catch (err) {
         res.json({message: err})
     }

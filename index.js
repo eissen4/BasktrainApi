@@ -12,6 +12,7 @@ const playerRoute = require('./routes/player')
 const exerciseRoute = require('./routes/exercise')
 const commentRoute = require('./routes/comment')
 const valueRoute = require('./routes/value')
+const upload = require('./routes/file')
 
 app.use(express.json());
 app.use('/', authRoute)
@@ -23,6 +24,7 @@ app.use('/statPlayerMatch', statPlayerMatchRoute)
 app.use('/exercise', exerciseRoute) 
 app.use('/comment', commentRoute) 
 app.use('/value', valueRoute) 
+app.use('/upload', upload)
 
 //Connect to DB
 mongoose.connect(process.env.DB_CONNECTION, () => {
