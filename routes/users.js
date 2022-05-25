@@ -15,7 +15,6 @@ router.get('/', verify, async (req, res) => {
 
 router.get('/', verify, async (req, res) => {
     const decoded = jwt.decode(req.header('auth-token'), process.env.SECRET_TOKEN);
-    console.log(decoded)
     try {
         const users = await Users.findById(decoded._id);
         res.json(users)
@@ -59,7 +58,6 @@ router.patch('/:userId', async (req, res) => {
 
 router.patch('/token/:userId', verify, async (req, res) => {
     const decoded = jwt.decode(req.header('auth-token'), process.env.SECRET_TOKEN);
-    console.log(decoded._id)
     try {
         const updatedUser = await Users.updateOne(
             {_id: decoded._id},

@@ -9,7 +9,6 @@ const bucket = storage.bucket("bezkoder-commerce");
 module.exports = router.post('/', async (req, res) => upload(req, res));
 
 const upload = async (req, res) => {
-    console.log("entra en upload")
     try {
         await processFile(req, res);
         if (!req.file) {

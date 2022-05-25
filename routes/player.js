@@ -7,7 +7,6 @@ const Player = require('../models/Player')
 router.get('/token/:playerId', verify, async (req, res) => {
     try {
         const player = await Player.find({_id: req.params.playerId});
-        console.log(player);
         res.json(player);
     }catch (err) {
         res.json({message:err});
@@ -15,7 +14,7 @@ router.get('/token/:playerId', verify, async (req, res) => {
 });
 
 router.post("/", verify, async (req, res) => {
-    console.log(req.body);
+    console.log(req.body)
     const post = new Player({
         name: req.body.name,
         team: req.body.team,

@@ -8,7 +8,6 @@ const Match = require('../models/Match');
 router.get('/:statPlayerMatchId', verify, async (req, res) => {
     try {
         const statPlayerMatch = await StatPlayerMatch.find({_id: req.params.statPlayerMatchId});
-        console.log(statPlayerMatch);
         res.json(statPlayerMatch);
     }catch (err) {
         res.json({message:err});
@@ -18,7 +17,6 @@ router.get('/:statPlayerMatchId', verify, async (req, res) => {
 router.get('/getAllStatsFromPlayer/:playerId', verify, async (req, res) => {
     try {
         const statsPlayer = await StatPlayerMatch.find({player: req.params.playerId});
-        console.log(statsPlayer);
         res.json(statsPlayer);
     }catch (err) {
         res.json({message:err});

@@ -10,7 +10,6 @@ router.get('/getAllExercisePerUser/', verify, async (req, res) => {
     const decoded = jwt.decode(req.header('auth-token'), process.env.SECRET_TOKEN);
     try {
         const exercises = await Exercise.find({ user: decoded._id });
-        console.log(exercises);
         res.json(exercises);
     } catch (err) {
         res.json({ message: err });
@@ -20,7 +19,6 @@ router.get('/getAllExercisePerUser/', verify, async (req, res) => {
 router.get('/getExercisePerId/:exerciseId', verify, async (req, res) => {
     try {
         const exercise = await Exercise.findOne({ _id: req.params.exerciseId });
-        console.log(exercise);
         res.json(exercise);
     } catch (err) {
         res.json({ message: err });
@@ -30,7 +28,6 @@ router.get('/getExercisePerId/:exerciseId', verify, async (req, res) => {
 router.get('/getCommentsPerExercise/:exerciseId', verify, async (req, res) => {
     try {
         const comments = await Comment.find({ _id: req.params.exerciseId });
-        console.log(comments);
         res.json(comments);
     } catch (err) {
         res.json({ message: err });
@@ -51,7 +48,6 @@ router.get('/getAverageValueExercise/:exerciseId', verify, async (req, res) => {
 
 router.post('/', verify, async (req, res) => {
     const decoded = jwt.decode(req.header('auth-token'), process.env.SECRET_TOKEN);
-    console.log(req.body);
     const post = new Exercise({
         user: decoded._id,
         title: req.body.title,

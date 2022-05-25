@@ -37,7 +37,6 @@ router.post('/register', async (req, res) => {
 
 //LOGIN
 router.post('/login', async (req,res) => {
-    
     //Valida que los datos sean correctos
     const {error} = loginValidation(req.body);
     if (error) return res.status(400).send(error.details[0].message);
