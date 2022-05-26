@@ -14,6 +14,15 @@ router.get('/:statPlayerMatchId', verify, async (req, res) => {
     }
 });
 
+router.get('/:statPlayerMatchId', verify, async (req, res) => {
+    try {
+        const statPlayerMatch = await StatPlayerMatch.find({_id: req.params.statPlayerMatchId});
+        res.json(statPlayerMatch);
+    }catch (err) {
+        res.json({message:err});
+    }
+});
+
 router.get('/getAllStatsFromPlayer/:playerId', verify, async (req, res) => {
     try {
         const statsPlayer = await StatPlayerMatch.find({player: req.params.playerId});

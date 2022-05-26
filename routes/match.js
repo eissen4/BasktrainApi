@@ -9,6 +9,7 @@ const StatPlayerMatch = require('../models/StatPlayerMatch');
 router.get('/', async (req, res) => {
     try {
         const match = await Match.find()
+        console.log(match)
         res.json(match)
     }catch (err) {
         res.json({message:err});
@@ -16,11 +17,8 @@ router.get('/', async (req, res) => {
 });
 
 router.get('/getAllMatchesFromTeam/:teamId', verify, async (req, res) => {
-    const decoded = jwt.decode(req.header('Authorization'), process.env.SECRET_TOKEN);
     try {
-        const team = await Team.findOne({user: decoded._id, name: req.params.teamId}).exec()
-        console.log(team);
-        const match = await Match.find({user: decoded._id, team: _id.toString()}).exec()
+        const match = await Match.find({team: req.params.teamId})
         console.log(match)
         res.json(match)
     }catch (err) {
@@ -64,10 +62,12 @@ router.post("/", async (req, res) => {
         team: req.body.team,
         opponent: req.body.opponent,
         scoreOne: req.body.scoreOne,
-        scoreTwo: req.body.scoreTwo
+        scoreTwo: req.body.scoreTwo,
+        date: req.body.date
     });
     try {
         const savedPost = await post.save();
+        console.log(savedPost)
         res.json(savedPost);
     } catch(err) {
         res.json({message: err});

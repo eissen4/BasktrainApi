@@ -38,6 +38,7 @@ router.get('/getTeamPerId/:teamId', verify, async (req, res) => {
 router.get('/getPlayersPerTeam/:teamId', verify, async (req, res) => {
     try {
         const players = await Player.find({team: req.params.teamId});
+        console.log(players)
         res.json(players);
     }catch (err) {
         res.json({message:err});

@@ -5,7 +5,8 @@ const UserSchema = mongoose.Schema({
     team: String,
     opponent: String,
     scoreOne: Number,
-    scoreTwo: Number
+    scoreTwo: Number,
+    date: Date
 })
 
 module.exports = mongoose.model('Match', UserSchema);
