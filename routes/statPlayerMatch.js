@@ -37,14 +37,17 @@ router.post("/", verify, async (req, res) => {
         return res.json("Este jugador ya tiene estadísticas en este partido")
     const post = new StatPlayerMatch({
         player: req.body.player,
+        team: req.body.team,
         match: req.body.match,
         opponent: req.body.opponent,
+        date: req.body.date,
         points: req.body.points,
         rebounds: req.body.rebounds,
         assists: req.body.assists
     });
     try {
         const savedPost = await post.save();
+        console.log(savedPost)
         res.json(savedPost);
     } catch(err) {
         res.json({message: err});
