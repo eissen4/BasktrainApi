@@ -48,16 +48,25 @@ router.post("/", verify, async (req, res) => {
         return res.json("Este jugador ya tiene estadísticas en este partido")
     const post = new StatPlayerMatch({
         player: req.body.player,
+<<<<<<< HEAD
         playerName: req.body.playerName,
+=======
+        team: req.body.team,
+>>>>>>> d3d15252390d5605a2e54eeb914d488470810caf
         match: req.body.match,
         opponent: req.body.opponent,
+        date: req.body.date,
         points: req.body.points,
         rebounds: req.body.rebounds,
         assists: req.body.assists
     });
     try {
         const savedPost = await post.save();
+<<<<<<< HEAD
         console.log(savedPost);
+=======
+        console.log(savedPost)
+>>>>>>> d3d15252390d5605a2e54eeb914d488470810caf
         res.json(savedPost);
     } catch(err) {
         res.json({message: err});
