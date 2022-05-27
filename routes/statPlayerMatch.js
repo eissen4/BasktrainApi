@@ -32,11 +32,23 @@ router.get('/getAllStatsFromPlayer/:playerId', verify, async (req, res) => {
     }
 });
 
+router.get('/getAllStatsFromMatch/:matchId', verify, async (req, res) => {
+    try {
+        const statsPlayer = await StatPlayerMatch.find({match: req.params.matchId});
+        console.log(statsPlayer);
+        res.json(statsPlayer);
+    }catch (err) {
+        res.json({message:err});
+    }
+});
+
 router.post("/", verify, async (req, res) => {
+    console.log(req.body.playerName)
     if(await StatPlayerMatch.exists({player: req.body.player, match: req.body.match})) 
         return res.json("Este jugador ya tiene estadísticas en este partido")
     const post = new StatPlayerMatch({
         player: req.body.player,
+        playerName: req.body.playerName,
         match: req.body.match,
         opponent: req.body.opponent,
         points: req.body.points,
@@ -45,6 +57,7 @@ router.post("/", verify, async (req, res) => {
     });
     try {
         const savedPost = await post.save();
+        console.log(savedPost);
         res.json(savedPost);
     } catch(err) {
         res.json({message: err});
