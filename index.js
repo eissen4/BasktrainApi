@@ -16,6 +16,7 @@ const upload = require('./routes/file')
 
 app.use(express.json());
 app.use('/', authRoute)
+app.use('/uploads', express.static('uploads'))
 app.use('/users', usersRoute)
 app.use('/match', matchRoute)
 app.use('/team', teamRoute)
