@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 
-const UserSchema = mongoose.Schema({
+const MatchSchema = mongoose.Schema({
     user: String,
     team: String,
     opponent: String,
@@ -9,4 +9,4 @@ const UserSchema = mongoose.Schema({
     date: Date
 })
 
-module.exports = mongoose.model('Match', UserSchema);
+module.exports = mongoose.model('Match', MatchSchema);

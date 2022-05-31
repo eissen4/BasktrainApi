@@ -27,7 +27,16 @@ router.get('/', verify, async (req, res) => {
     const decoded = jwt.decode(req.header('Authorization'), process.env.SECRET_TOKEN);
     try {
         const exercises = await Exercise.find({ user: decoded._id });
+        console.log(exercises)
         res.json(exercises);
+    } catch (err) {
+        res.json({ message: err });
+    }
+});
+router.get('/', verify, async (req, res) => {
+    try {
+        const exercise = await Exercise.find().populate('Value');
+        res.json(exercise);
     } catch (err) {
         res.json({ message: err });
     }
@@ -63,13 +72,24 @@ router.get('/getAverageValueExercise/:exerciseId', verify, async (req, res) => {
     }
 });
 
+router.get('/getExerciseSearched/:names', verify, async (req, res) => {
+    try {
+        const exercises = await Exercise.find({ title: req.params.names });
+        res.json(exercises);
+    } catch (err) {
+        res.json({ message: err });
+    }
+});
+
 router.post('/', verify, upload.single("file"), async (req, res) => {
     console.log(req.file + " router");
     const decoded = jwt.decode(req.header('Authorization'), process.env.SECRET_TOKEN);
     const post = new Exercise({
         user: decoded._id,
         title: req.body.title,
-        imageUrl: req.body.imageUrl,
+        imageUrl: req.body.imageUrl.toString().replace(/:/g, '-').replace(/\//g, '-')
+        + (jwt.decode(req.header('Authorization'), process.env.SECRET_TOKEN))._id
+        + "a.jpg",
         description: req.body.description
     });
     try {

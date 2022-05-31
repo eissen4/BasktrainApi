@@ -1,9 +1,9 @@
 const mongoose = require('mongoose');
 
-const UserSchema = mongoose.Schema({
+const CommentSchema = mongoose.Schema({
     user: String,
     exercise: String,
     comment: String
 })
 
-module.exports = mongoose.model('Comment', UserSchema);
+module.exports = mongoose.model('Comment', CommentSchema);

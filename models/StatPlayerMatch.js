@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 
-const UserSchema = mongoose.Schema({
+const StatPlayerSchema = mongoose.Schema({
     player: String,
     playerName: String,
     team: String,
@@ -12,4 +12,4 @@ const UserSchema = mongoose.Schema({
     assists: Number,
 })
 
-module.exports = mongoose.model('StatPlayerMatch', UserSchema);
+module.exports = mongoose.model('StatPlayerMatch', StatPlayerSchema);

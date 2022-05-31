@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 
-const UserSchema = mongoose.Schema({
+const PlayerSchema = mongoose.Schema({
     name: String,
     team: String,
     height: String,
@@ -8,4 +8,4 @@ const UserSchema = mongoose.Schema({
     image: String
 })
 
-module.exports = mongoose.model('Player', UserSchema);
+module.exports = mongoose.model('Player', PlayerSchema);
