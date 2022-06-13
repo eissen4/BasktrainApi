@@ -9,14 +9,14 @@ const Player = require('../models/Player')
 router.get('/', verify, async (req, res) => {
     const decoded = jwt.decode(req.header('Authorization'), process.env.SECRET_TOKEN);
     try {
-        const team = await Team.find();
-        res.json(team);
+        const teams = await Team.find();
+        res.json(teams);
     }catch (err) {
         res.json({message:err});
     }
 });
 
-router.get('/getTeamPerToken/', async (req, res) => {
+router.get('/getTeamPerToken/', verify, async (req, res) => {
     const decoded = jwt.decode(req.header('Authorization'), process.env.SECRET_TOKEN);
     try {
         const team = await Team.find({user: decoded._id});
@@ -38,14 +38,16 @@ router.get('/getTeamPerId/:teamId', verify, async (req, res) => {
 router.get('/getPlayersPerTeam/:teamId', verify, async (req, res) => {
     try {
         const players = await Player.find({team: req.params.teamId});
-        console.log(players)
         res.json(players);
     }catch (err) {
         res.json({message:err});
     }
 });
 
+
+
 router.post("/", verify, async (req, res) => {
+    console.log("entra")
     const decoded = jwt.decode(req.header('Authorization'), process.env.SECRET_TOKEN);
     const post = new Team({
         name: req.body.name,

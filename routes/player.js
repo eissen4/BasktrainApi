@@ -6,6 +6,7 @@ const Player = require('../models/Player');
 const StatPlayerMatch = require('../models/StatPlayerMatch');
 const Match = require('../models/Match');
 
+
 router.get('/token/:playerId', verify, async (req, res) => {
     try {
         const player = await Player.find({_id: req.params.playerId});

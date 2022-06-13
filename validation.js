@@ -9,15 +9,10 @@ const registerValidation = (data) => {
         password: Joi.string()
             .min(1)
             .required(),
-        data: {
-            email: Joi.string()
+        email: Joi.string()
                 .min(1)
                 .required()
-                .email(),
-            name: Joi.string()
-                .min(1)
-                .required()
-        }
+                .email()
     });
     return schema.validate(data);
 }

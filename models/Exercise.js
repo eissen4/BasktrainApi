@@ -6,7 +6,7 @@ const ExerciseSchema = mongoose.Schema({
     title: String,
     imageUrl: String,
     description: String,
-    value: [{type: Schema.Types.ObjectId, ref: 'Value'}]
+    value: [String]
 })
 
 module.exports = mongoose.model('Exercise', ExerciseSchema);

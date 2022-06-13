@@ -13,7 +13,7 @@ const storage = multer.diskStorage({
         cb(null, './uploads');
     },
     filename: function (req, file, cb) {
-        cb(null, req.body.imageUrl.toString().replace(/:/g, '-').replace(/\//g, '-')
+        cb(null, req.body.imageUrl.toString().replace(/:/g, '-').replace(/\//g, '-').replace(/\s/g, '')
         + (jwt.decode(req.header('Authorization'), process.env.SECRET_TOKEN))._id
         + file.originalname);
     }
@@ -73,8 +73,14 @@ router.get('/getAverageValueExercise/:exerciseId', verify, async (req, res) => {
 });
 
 router.get('/getExerciseSearched/:names', verify, async (req, res) => {
+    names = req.params.names.split(' ');
+    console.log(names)
     try {
-        const exercises = await Exercise.find({ title: req.params.names });
+        const exercises = await Exercise.find({title: {"$regex": names[0]}})
+        exercises.map(exercise => {
+            names.map( name => !exercise.title.includes(name) ? exercises.shift() : null)
+        })
+        console.log(exercises)
         res.json(exercises);
     } catch (err) {
         res.json({ message: err });
@@ -87,7 +93,7 @@ router.post('/', verify, upload.single("file"), async (req, res) => {
     const post = new Exercise({
         user: decoded._id,
         title: req.body.title,
-        imageUrl: req.body.imageUrl.toString().replace(/:/g, '-').replace(/\//g, '-')
+        imageUrl: req.body.imageUrl.toString().replace(/:/g, '-').replace(/\//g, '-').replace(/\s/g, '')
         + (jwt.decode(req.header('Authorization'), process.env.SECRET_TOKEN))._id
         + "a.jpg",
         description: req.body.description

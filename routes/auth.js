@@ -22,14 +22,11 @@ router.post('/register', async (req, res) => {
     const user = new User ({
         username: req.body.username,
         password: hashedPassword,
-        data: {
-            name: req.body.data.name,
-            email: req.body.data.email
-        }
+        email: req.body.email
     });
     try {
         const savedUser = await user.save();
-        res.send({user: user._id});
+        res.send(savedUser);
     }catch (err) {
         res.status(400).send(err);
     }
@@ -37,6 +34,7 @@ router.post('/register', async (req, res) => {
 
 //LOGIN
 router.post('/login', async (req,res) => {
+    console.log(req.body)
     //Valida que los datos sean correctos
     const {error} = loginValidation(req.body);
     if (error) return res.status(400).send(error.details[0].message);
@@ -52,7 +50,7 @@ router.post('/login', async (req,res) => {
 
     //Crea y asigna un token
     const token = jwt.sign({_id: username._id}, process.env.SECRET_TOKEN);
-    res.header("auth-token", token).send(token);
+    res.header("auth-token", token).send({token});
 
     //res.send('Logged in')
 });

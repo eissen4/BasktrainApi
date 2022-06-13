@@ -26,6 +26,7 @@ router.get('/:statPlayerMatchId', verify, async (req, res) => {
 router.get('/getAllStatsFromPlayer/:playerId', verify, async (req, res) => {
     try {
         const statsPlayer = await StatPlayerMatch.find({player: req.params.playerId});
+        console.log(statsPlayer)
         res.json(statsPlayer);
     }catch (err) {
         res.json({message:err});

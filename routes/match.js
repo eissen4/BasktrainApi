@@ -56,6 +56,7 @@ router.get('/getAllStatsFromMatch/:matchId', verify, async (req, res) => {
 });
 
 router.post("/", async (req, res) => {
+    console.log("entra")
     const decoded = jwt.decode(req.header('Authorization'), process.env.SECRET_TOKEN);
     const post = new Match({
         user: decoded._id,
@@ -65,6 +66,7 @@ router.post("/", async (req, res) => {
         scoreTwo: req.body.scoreTwo,
         date: req.body.date
     });
+    
     try {
         const savedPost = await post.save();
         console.log(savedPost)
@@ -79,6 +81,7 @@ router.delete("/:matchId", verify, async (req, res) =>{
         const removeMatch = await Match.deleteOne({_id: req.params.matchId});
         const removeStats = await StatPlayerMatch.deleteMany({match: req.params.matchId});
         response = {removeMatch, removeStats}
+        console.log(response)
         res.json(response);
     } catch (err) {
         res.json({message: err})
